@@ -1,36 +1,28 @@
 // Copyright 2000-2021 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import di.koinInitialize
 import entities.toText
-import org.koin.java.KoinJavaComponent.get
 import org.koin.java.KoinJavaComponent.inject
-import services.IQuadraticEquationService
 import viewmodel.QuadEqViewModel
 
 @Composable
 @Preview
 fun App() {
 
-    //val quadEqService by inject<IQuadraticEquationService>(IQuadraticEquationService::class.java)
     val viewModel by inject<QuadEqViewModel>(QuadEqViewModel::class.java)
-
-    //var text by remember { mutableStateOf("Hello, World!") }
 
     MaterialTheme {
         Row(Modifier.fillMaxWidth()) {
@@ -72,9 +64,8 @@ fun inputFields(vm: QuadEqViewModel) {
     Row(modifier = Modifier.padding(start = 30.dp, top = 30.dp, end = 30.dp, bottom = 5.dp).fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Text("a =", modifier = Modifier.padding(end = 15.dp))
         OutlinedTextField(
-            value = vm.a.value?.let { it.toString() } ?: "0.0",
+            value = vm.a.value?.toString() ?: "0.0",
             onValueChange = { vm.strToDouble(it)?.let { x -> vm.a.value = x } },
-            label = {"a"},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
     }
@@ -82,9 +73,8 @@ fun inputFields(vm: QuadEqViewModel) {
     Row(modifier = Modifier.padding(start = 30.dp, top = 5.dp, end = 30.dp, bottom = 5.dp).fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Text("b =", modifier = Modifier.padding(end = 15.dp))
         OutlinedTextField(
-            value = vm.b.value?.let { it.toString() } ?: "0.0",
+            value = vm.b.value?.toString() ?: "0.0",
             onValueChange = { vm.strToDouble(it)?.let { x -> vm.b.value = x } },
-            label = {"b"},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
     }
@@ -92,9 +82,8 @@ fun inputFields(vm: QuadEqViewModel) {
     Row(modifier = Modifier.padding(start = 30.dp, top = 5.dp, end = 30.dp, bottom = 30.dp).fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Text("c =", modifier = Modifier.padding(end = 15.dp))
         OutlinedTextField(
-            value = vm.c.value?.let { it.toString() } ?: "0.0",
+            value = vm.c.value?.toString() ?: "0.0",
             onValueChange = { vm.strToDouble(it)?.let { x -> vm.c.value = x } },
-            label = {"c"},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
     }
