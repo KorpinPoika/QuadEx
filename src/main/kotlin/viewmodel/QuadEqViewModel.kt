@@ -13,21 +13,27 @@ class QuadEqViewModel(private val quadEqService: IQuadraticEquationService) {
 
     val result: MutableState<Pair<ComplexNumber, ComplexNumber>?> = mutableStateOf(null)
 
-    var textOfEquation = ""
+    val textOfEquation
         get() = "${a.value ?: 0.0}*x^2 + ${b.value ?: 0.0}*x + ${c.value ?: 0.0} = 0"
 
     val errorMessage = mutableStateOf("")
-    var isError = false
+    val isError
         get() = errorMessage.value.isNotEmpty()
 
-    fun solveEquation() {
+    suspend fun solveEquation() {
         if (a.value == null) {
             errorMessage.value = "Not a quadratic equation. 'a' shouldn't be zero."
             result.value = null
             return
         }
 
+        //val coroutineScope = rememberCoroutineScope()
+
         errorMessage.value = ""
+
+//        coroutineScope.launch(Dispatchers.Main){
+//
+//        }
         result.value = quadEqService.solve(a.value!!, b.value ?: 0.0, c.value ?: 0.0)
     }
 

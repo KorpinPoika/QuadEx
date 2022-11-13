@@ -1,3 +1,4 @@
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -11,7 +12,7 @@ class QuadraticEquationServiceTests {
 
     @DisplayName("Real roots test")
     @Test
-    fun realRootsTest() {
+    fun realRootsTest() = runBlocking {
         val res = qadExService.solve(1.0, 0.0, -9.0)
 
         assertEquals( 3.0, res.first.re, "x1 real")
@@ -23,7 +24,7 @@ class QuadraticEquationServiceTests {
 
     @DisplayName("Imaginary roots test")
     @Test
-    fun imaginaryRootsTest() {
+    fun imaginaryRootsTest() = runBlocking {
         val res = qadExService.solve(2.0, 6.0, 9.0)
 
         assertEquals(-1.5, res.first.re, "x1 real")
@@ -35,7 +36,7 @@ class QuadraticEquationServiceTests {
 
     @DisplayName("One root test")
     @Test
-    fun oneRootTest() {
+    fun oneRootTest() = runBlocking {
         val res = qadExService.solve(1.0, 6.0, 9.0)
 
         assertEquals(-3.0, res.first.re, "x1 real")

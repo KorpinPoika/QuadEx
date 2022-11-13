@@ -5,7 +5,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 class QuadraticEquationService : IQuadraticEquationService {
-    override fun solve(a: Double, b: Double, c: Double): Pair<ComplexNumber, ComplexNumber> {
+    override suspend fun solve(a: Double, b: Double, c: Double): Pair<ComplexNumber, ComplexNumber> {
         val d = b.pow(2) - 4*a*c
 
         if (d < 0) {

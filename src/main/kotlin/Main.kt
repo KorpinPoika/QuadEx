@@ -7,6 +7,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -15,6 +16,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import di.koinInitialize
 import entities.toText
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
 import viewmodel.QuadEqViewModel
 
@@ -23,6 +26,7 @@ import viewmodel.QuadEqViewModel
 fun App() {
 
     val viewModel by inject<QuadEqViewModel>(QuadEqViewModel::class.java)
+    val coroutineScope = rememberCoroutineScope()
 
     MaterialTheme {
         Row(Modifier.fillMaxWidth()) {
@@ -36,7 +40,12 @@ fun App() {
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                         Button(
                             modifier = Modifier.padding(30.dp),
-                            onClick = { viewModel.solveEquation() }
+                            //onClick = { viewModel.solveEquation() }
+                            onClick = {
+                                coroutineScope.launch(Dispatchers.Main) {
+                                    viewModel.solveEquation()
+                                }
+                            }
                         ) {
                             Text("Solve")
                         }
@@ -114,7 +123,7 @@ fun main() = application {
 
     koinInitialize()
 
-    Window(onCloseRequest = ::exitApplication) {
+    Window(title = "Quadratic equation", onCloseRequest = ::exitApplication) {
         App()
     }
 }
